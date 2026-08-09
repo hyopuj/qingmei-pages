@@ -4,7 +4,7 @@
   const treeId = document.body.dataset.treeId;
   const $ = (id) => document.getElementById(id);
   const stageGlyphs = { 幼苗期: '芽', 开花期: '花', 膨果期: '果', 成熟期: '熟' };
-  const qrAssets = { QM001: 'assets/qr-frame-QM001.jpg', QM002: 'assets/qr-frame-QM002.jpg' };
+  const qrAssets = { QM001: 'assets/qr-QM001.png', QM002: 'assets/qr-QM002.png' };
   const publicPages = { QM001: 'https://hyopuj.github.io/qingmei-pages/QM001.html', QM002: 'https://hyopuj.github.io/qingmei-pages/QM002.html' };
 
   const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({
@@ -77,7 +77,7 @@
     const qrLink = $('qrLink');
     if (qrImage) {
       qrImage.src = qrAssets[tree.id] || qrImage.src;
-      qrImage.alt = `${tree.id} 一对一溯源二维码贴图`;
+      qrImage.alt = `${tree.id} 一对一溯源二维码`;
     }
     if (qrLink) {
       qrLink.href = publicPages[tree.id] || qrLink.href;
