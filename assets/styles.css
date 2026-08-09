@@ -35,6 +35,16 @@ button { color: inherit; }
 .ambient-a { width: 430px; height: 430px; right: -180px; top: 160px; background: radial-gradient(circle, rgba(196, 154, 75, .2), transparent 70%); }
 .ambient-b { width: 500px; height: 500px; left: -300px; top: 58%; background: radial-gradient(circle, rgba(35, 79, 59, .12), transparent 70%); }
 
+.archive-page { position: relative; isolation: isolate; background:
+  radial-gradient(circle at 78% 4%, rgba(196,154,75,.17), transparent 30%),
+  radial-gradient(circle at 9% 54%, rgba(35,79,59,.12), transparent 34%),
+  linear-gradient(118deg, rgba(255,253,248,.8), rgba(244,241,232,.94) 48%, rgba(231,226,214,.78));
+  background-attachment: fixed;
+}
+.archive-page::before { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .32; background-image: radial-gradient(rgba(24,35,29,.12) .55px, transparent .7px); background-size: 5px 5px; mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 82%); }
+.archive-page::after { content: ""; position: fixed; z-index: 0; pointer-events: none; right: -3vw; top: 88px; width: min(760px, 58vw); aspect-ratio: 4 / 3; opacity: .16; background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cg fill='none' stroke='%23234f3b' stroke-width='2'%3E%3Cpath d='M760 42C630 110 559 188 495 284S302 470 78 545'/%3E%3Cpath d='M622 132c-55-44-95-59-141-48 35 54 78 75 141 48ZM554 210c55-39 100-46 145-26-43 47-90 59-145 26ZM445 333c-58-40-104-46-151-22 47 46 96 56 151 22ZM352 412c47-12 87-2 119 30-51 18-91 8-119-30Z'/%3E%3C/g%3E%3Cg fill='%23c49a4b' fill-opacity='.42' stroke='%23866a31' stroke-width='1.5'%3E%3Ccircle cx='595' cy='174' r='19'/%3E%3Ccircle cx='472' cy='306' r='16'/%3E%3Ccircle cx='296' cy='458' r='21'/%3E%3C/g%3E%3C/svg%3E"); }
+.archive-page .site-header, .archive-page main, .archive-page .site-footer { position: relative; z-index: 1; }
+
 .site-header { width: min(1340px, calc(100% - 56px)); height: 92px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; gap: 12px; width: max-content; }
 .brand-mark { width: 44px; height: 44px; border-radius: 14px 14px 14px 4px; display: grid; place-items: center; background: var(--leaf); color: white; font-weight: 800; font-size: 20px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
@@ -154,8 +164,14 @@ button { color: inherit; }
 .error-banner { position: fixed; z-index: 20; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 13px 18px; border-radius: 12px; background: var(--danger); color: white; box-shadow: var(--shadow); font-size: 12px; }
 
 /* Console */
-.console-page { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; background: #f0ecdf; }
-.console-sidebar { position: sticky; top: 0; height: 100vh; padding: 28px 22px; display: flex; flex-direction: column; background: #123426; color: white; }
+.console-page { position: relative; isolation: isolate; display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; background:
+  radial-gradient(circle at 88% 2%, rgba(196,154,75,.2), transparent 28%),
+  radial-gradient(circle at 45% 60%, rgba(35,79,59,.08), transparent 38%),
+  linear-gradient(135deg, #f5f1e7, #ebe6d9);
+  background-attachment: fixed;
+}
+.console-page::before { content: ""; position: fixed; z-index: 0; pointer-events: none; inset: 0 0 0 240px; opacity: .2; background-image: linear-gradient(rgba(35,79,59,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(35,79,59,.12) 1px, transparent 1px); background-size: 38px 38px; mask-image: linear-gradient(135deg, transparent 5%, rgba(0,0,0,.75) 52%, transparent 96%); }
+.console-sidebar { position: sticky; z-index: 2; top: 0; height: 100vh; padding: 28px 22px; display: flex; flex-direction: column; background: linear-gradient(180deg, #153a2b, #0d2a1f); color: white; box-shadow: 18px 0 60px rgba(12,35,25,.12); }
 .brand-light .brand-mark { background: #d2af57; color: #153526; }
 .brand-light small { color: #cbd8cf; }
 .console-sidebar nav { display: grid; gap: 6px; margin-top: 70px; }
@@ -167,7 +183,7 @@ button { color: inherit; }
 .sidebar-note small { color: #b7c7bd; font-size: 10px; }
 .sidebar-note strong { font-size: 11px; }
 .sidebar-foot { margin: 18px 4px 0; color: #9fb2a7; font: 10px/1.7 var(--mono); }
-.console-main { width: min(1400px, calc(100% - 64px)); margin: 0 auto; padding: 45px 0 80px; min-width: 0; }
+.console-main { position: relative; z-index: 1; width: min(1400px, calc(100% - 64px)); margin: 0 auto; padding: 45px 0 80px; min-width: 0; }
 .console-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
 .console-header h1 { margin: 0; font-size: clamp(34px, 4vw, 52px); letter-spacing: -.05em; }
 .console-header > div > p:last-child { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
@@ -273,6 +289,7 @@ button { color: inherit; }
   .stage-image { height: auto; }
   .trust-panel { grid-template-columns: 1fr; gap: 35px; }
   .console-page { grid-template-columns: 78px 1fr; }
+  .console-page::before { inset: 0 0 0 78px; }
   .console-sidebar { padding: 24px 14px; align-items: center; }
   .console-sidebar .brand > span:last-child, .console-sidebar nav a:not(.active)::after, .console-sidebar nav a { font-size: 0; }
   .console-sidebar nav a { justify-content: center; padding: 14px; }
@@ -284,6 +301,7 @@ button { color: inherit; }
 }
 
 @media (max-width: 720px) {
+  .archive-page::after { top: 150px; right: -24vw; width: 110vw; opacity: .1; }
   .site-header, .archive-page main, .site-footer { width: min(100% - 32px, 1340px); }
   .site-header { height: auto; min-height: 80px; grid-template-columns: 1fr auto; }
   .record-nav { order: 3; grid-column: 1 / -1; margin: 0 auto 14px; }
@@ -307,6 +325,7 @@ button { color: inherit; }
   .trust-panel dd { text-align: left; }
   .site-footer { gap: 14px; flex-direction: column; }
   .console-page { display: block; }
+  .console-page::before { inset: 0; opacity: .12; }
   .console-sidebar { position: static; width: 100%; height: auto; flex-direction: row; justify-content: space-between; padding: 14px 18px; }
   .console-sidebar nav { display: none; }
   .console-sidebar .brand > span:last-child { display: grid; }
