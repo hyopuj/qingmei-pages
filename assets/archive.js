@@ -4,6 +4,8 @@
   const treeId = document.body.dataset.treeId;
   const $ = (id) => document.getElementById(id);
   const stageGlyphs = { 幼苗期: '芽', 开花期: '花', 膨果期: '果', 成熟期: '熟' };
+  const qrAssets = { QM001: 'assets/qr-frame-QM001.jpg', QM002: 'assets/qr-frame-QM002.jpg' };
+  const publicPages = { QM001: 'https://hyopuj.github.io/qingmei-pages/QM001.html', QM002: 'https://hyopuj.github.io/qingmei-pages/QM002.html' };
 
   const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -71,6 +73,18 @@
     setText('soil', tree.soil);
     setText('coordinates', tree.coordinates);
     setText('certification', tree.certification);
+    const qrImage = $('qrImage');
+    const qrLink = $('qrLink');
+    if (qrImage) {
+      qrImage.src = qrAssets[tree.id] || qrImage.src;
+      qrImage.alt = `${tree.id} 一对一溯源二维码贴图`;
+    }
+    if (qrLink) {
+      qrLink.href = publicPages[tree.id] || qrLink.href;
+      qrLink.setAttribute('aria-label', `打开 ${tree.id} GitHub Pages 公开档案`);
+    }
+    setText('qrTitle', `${tree.id} 专属二维码`);
+    setText('qrCode', tree.id);
     setText('stageCount', tree.stages.length);
     setText('publishedCount', published);
     setText('completeness', `${completeness}%`);
