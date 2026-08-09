@@ -27,6 +27,8 @@
 
   function renderTimeline(stages, currentStage) {
     const currentIndex = Math.max(0, stages.findIndex((stage) => stage.name === currentStage));
+    const progress = stages.length > 1 ? (currentIndex / (stages.length - 1)) * 100 : 100;
+    $('timeline').style.setProperty('--progress', `${progress}%`);
     $('timeline').innerHTML = stages.map((stage, index) => {
       const state = index < currentIndex ? 'complete' : (index === currentIndex ? 'current' : 'future');
       return `<li class="${state}"><span>${escapeHtml(stageGlyphs[stage.name] || String(index + 1))}</span><div><small>${escapeHtml(stage.date)}</small><strong>${escapeHtml(stage.name)}</strong></div></li>`;
@@ -53,7 +55,22 @@
       button.addEventListener('click', () => openLightbox(button.dataset.image, button.dataset.caption));
     });
 
-    requestAnimationFrame(() => document.querySelectorAll('.reveal').forEach((card) => card.classList.add('visible')));
+    const revealCards = [...document.querySelectorAll('.reveal')];
+    if (!('IntersectionObserver' in window)) {
+      requestAnimationFrame(() => revealCards.forEach((card) => card.classList.add('visible')));
+      return;
+    }
+    let pending = revealCards.length;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+        pending -= 1;
+      });
+      if (pending <= 0) observer.disconnect();
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealCards.forEach((card) => observer.observe(card));
   }
 
   function openLightbox(src, caption) {
