@@ -225,6 +225,10 @@ button { color: inherit; }
 .github-actions small { color: rgba(255,255,255,.54); text-align: right; font-size: 9px; line-height: 1.6; }
 .github-actions code { color: var(--lime); font-family: var(--mono); }
 .github-actions a { color: var(--lime); text-decoration: underline; }
+.github-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.github-links a { padding: 6px 9px; border: 1px solid rgba(218,239,146,.35); border-radius: 7px; font-size: 10px; text-decoration: none; }
+.github-links a:hover { background: rgba(218,239,146,.12); }
+.github-links a.disabled-link { opacity: .45; pointer-events: none; }
 .github-actions .primary-button:disabled { opacity: .46; cursor: not-allowed; transform: none; }
 .record-summary { display: grid; grid-template-columns: .6fr 1fr 1.2fr 1fr; padding: 20px; gap: 10px; }
 .record-summary > div { padding: 14px; border-radius: 12px; background: #f0ece2; }
@@ -353,6 +357,7 @@ button { color: inherit; }
   .record-summary, .manage-grid { grid-template-columns: 1fr; }
   .github-panel { align-items: flex-start; flex-direction: column; }
   .github-actions { width: 100%; justify-items: stretch; }
+  .github-links { justify-content: flex-start; }
   .github-actions small { text-align: left; }
   .manage-preview { height: auto; }
   .upload-zone small { display: none; }
