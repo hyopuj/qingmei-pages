@@ -16,7 +16,7 @@
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return value;
     return new Intl.DateTimeFormat('zh-CN', includeTime
-      ? { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }
+      ? { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }
       : { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
   };
 
@@ -31,7 +31,7 @@
     $('timeline').style.setProperty('--progress', `${progress}%`);
     $('timeline').innerHTML = stages.map((stage, index) => {
       const state = index < currentIndex ? 'complete' : (index === currentIndex ? 'current' : 'future');
-      return `<li class="${state}"><span>${escapeHtml(stageGlyphs[stage.name] || String(index + 1))}</span><div><small>${escapeHtml(stage.date)}</small><strong>${escapeHtml(stage.name)}</strong></div></li>`;
+      return `<li class="${state}"><span>${escapeHtml(stageGlyphs[stage.name] || String(index + 1))}</span><div><small>${escapeHtml(formatDate(stage.date))}</small><strong>${escapeHtml(stage.name)}</strong></div></li>`;
     }).join('');
   }
 
@@ -40,13 +40,21 @@
       const image = stage.hasImage
         ? `<button class="stage-image" type="button" data-image="${escapeHtml(stage.imageUrl)}" data-caption="${escapeHtml(`${treeId} · ${stage.name}`)}"><img src="${escapeHtml(stage.imageUrl)}" alt="${escapeHtml(`${treeId} ${stage.name}生长影像`)}" loading="lazy"><span>查看大图 ↗</span></button>`
         : `<div class="stage-image stage-placeholder"><span>${escapeHtml(stageGlyphs[stage.name] || '档')}</span><p>影像待下发</p></div>`;
+      const remotelyPublished = Boolean(stage.published && stage.publishedAt);
+      const releaseLabel = remotelyPublished ? '真实下发' : (stage.unpublishedAt ? '撤回时间' : '下发状态');
+      const releaseValue = remotelyPublished
+        ? formatDate(stage.publishedAt, true)
+        : stage.unpublishedAt
+          ? formatDate(stage.unpublishedAt, true)
+          : '尚未真实下发';
+      const statusText = remotelyPublished ? '已下发' : (stage.hasImage ? '本机已选' : '待发布');
       return `<article class="stage-card reveal" style="--delay:${index * 80}ms">
         ${image}
         <div class="stage-body">
-          <div class="stage-kicker"><span>0${index + 1}</span><i></i><b class="${stage.hasImage ? 'released' : 'draft'}">${stage.hasImage ? '已下发' : '待发布'}</b></div>
+          <div class="stage-kicker"><span>0${index + 1}</span><i></i><b class="${remotelyPublished ? 'released' : 'draft'}">${statusText}</b></div>
           <h3>${escapeHtml(stage.name)}<small>${escapeHtml(stage.summary)}</small></h3>
           <p>${escapeHtml(stage.description)}</p>
-          <footer><span>记录日期</span><time>${escapeHtml(formatDate(stage.date))}</time></footer>
+          <footer><span>采集日期<time>${escapeHtml(formatDate(stage.date))}</time></span><span>${releaseLabel}<time>${escapeHtml(releaseValue)}</time></span></footer>
         </div>
       </article>`;
     }).join('');
@@ -79,7 +87,7 @@
     $('lightbox').showModal();
   }
 
-  function hydrate(tree, updatedAt) {
+  function hydrate(tree, updatedAt, deployedAt) {
     const published = tree.stages.filter((stage) => stage.hasImage).length;
     const completeness = Math.round((published / tree.stages.length) * 100);
     setText('treeSeal', tree.id);
@@ -107,14 +115,14 @@
     setText('completeness', `${completeness}%`);
     setText('currentStage', `${tree.currentStage} · 持续归档`);
     setText('traceId', tree.traceId);
-    setText('lastSync', formatDate(updatedAt, true));
+    setText('lastSync', deployedAt ? formatDate(deployedAt, true) : '尚未真实下发');
     renderTimeline(tree.stages, tree.currentStage);
     renderStages(tree.stages);
   }
 
   async function loadArchive(showError = true) {
     if (window.__ARCHIVE__) {
-      hydrate(window.__ARCHIVE__, window.__ARCHIVE_UPDATED_AT__ || window.__ARCHIVE__.updatedAt);
+      hydrate(window.__ARCHIVE__, window.__ARCHIVE_UPDATED_AT__ || window.__ARCHIVE__.updatedAt, window.__ARCHIVE_DEPLOYED_AT__ || window.__ARCHIVE__.deployedAt);
       $('errorBanner').hidden = true;
       return;
     }
@@ -122,7 +130,7 @@
       const response = await fetch(`/api/trees/${encodeURIComponent(treeId)}`, { cache: 'no-store' });
       const payload = await response.json();
       if (!response.ok || !payload.success) throw new Error(payload.message || '档案读取失败');
-      hydrate(payload.data, payload.updatedAt);
+      hydrate(payload.data, payload.updatedAt, payload.data.deployedAt);
       $('errorBanner').hidden = true;
     } catch (error) {
       if (showError) {

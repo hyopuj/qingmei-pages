@@ -154,7 +154,9 @@ button { color: inherit; }
 .stage-body h3 { margin: 18px 0 12px; display: flex; align-items: baseline; gap: 12px; font-size: 28px; }
 .stage-body h3 small { color: var(--leaf-2); font-size: 11px; letter-spacing: .08em; }
 .stage-body > p { min-height: 52px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
-.stage-body footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; }
+.stage-body footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 10px; }
+.stage-body footer > span { display: grid; gap: 5px; }
+.stage-body footer > span:last-child { text-align: right; }
 .stage-body footer time { color: var(--ink); font-family: var(--mono); }
 .loading-card { height: 520px; border-radius: 24px; background: linear-gradient(100deg, #e5e9df 20%, #f1f4ed 40%, #e5e9df 60%); background-size: 200% 100%; animation: load 1.4s infinite; }
 @keyframes load { to { background-position: -200% 0; } }
@@ -222,6 +224,9 @@ button { color: inherit; }
 .github-status.connected { color: #31260f; background: #e0c56d; }
 .github-status.offline { color: #ffe2aa; background: rgba(255,185,79,.16); }
 .github-actions { min-width: 250px; display: grid; gap: 10px; justify-items: end; }
+.github-login-button { min-height: 44px; padding: 11px 18px; border: 1px solid rgba(218,239,146,.58); border-radius: 999px; background: rgba(255,255,255,.08); color: var(--lime); cursor: pointer; font-weight: 700; transition: transform .2s ease, background .2s ease, opacity .2s ease; }
+.github-login-button:hover { transform: translateY(-2px); background: rgba(218,239,146,.14); }
+.github-login-button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 .github-actions small { color: rgba(255,255,255,.54); text-align: right; font-size: 9px; line-height: 1.6; }
 .github-actions code { color: var(--lime); font-family: var(--mono); }
 .github-actions a { color: var(--lime); text-decoration: underline; }
