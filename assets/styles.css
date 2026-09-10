@@ -664,7 +664,7 @@ body { overflow-x: hidden; }
   background: linear-gradient(118deg, rgba(11,48,34,.97), rgba(35,79,59,.95));
   box-shadow: 0 28px 70px rgba(17,49,34,.24);
 }
-.github-panel::after { content: "GITHUB\A PAGES"; white-space: pre; position: absolute; right: 28px; top: -10px; color: rgba(255,255,255,.045); font: 900 58px/.82 var(--mono); text-align: right; pointer-events: none; }
+.github-panel::after { content: "PUBLIC\A ARCHIVE"; white-space: pre; position: absolute; right: 28px; top: -10px; color: rgba(255,255,255,.045); font: 900 58px/.82 var(--mono); text-align: right; pointer-events: none; }
 .github-copy, .github-actions { position: relative; z-index: 1; }
 .github-panel h2 { font-size: 32px; }
 .github-copy > p:not(.eyebrow) { font-size: 13px; }
