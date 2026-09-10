@@ -270,6 +270,10 @@ button { color: inherit; }
 .note-field textarea { width: 100%; resize: vertical; min-height: 64px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--ink); font-size: 10px; line-height: 1.6; }
 .card-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
 .save-note { border: 0; padding: 8px 11px; border-radius: 8px; color: var(--leaf); background: var(--success-bg); cursor: pointer; font-size: 10px; font-weight: 700; }
+.publication-controls { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.unpublish-button { border: 1px solid rgba(143,48,43,.38); padding: 8px 10px; border-radius: 8px; color: var(--danger); background: #fff3f0; cursor: pointer; font-size: 10px; font-weight: 700; transition: .2s ease; }
+.unpublish-button:hover { color: white; background: var(--danger); transform: translateY(-1px); }
+.unpublish-button:disabled { opacity: .5; cursor: wait; transform: none; }
 .publish-switch { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .publish-switch input { position: absolute; opacity: 0; }
 .publish-switch span { position: relative; width: 34px; height: 19px; border-radius: 999px; background: #c8cec5; transition: .2s; }
